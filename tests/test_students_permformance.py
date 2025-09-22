@@ -19,7 +19,7 @@ def test_students_performance_report_column(capsys, tmp_path) -> None:
     performance_report([str(csv)], 'student_name')
 
     out = capsys.readouterr()
-    assert "должен содержать столбцы" in out.out
+    assert "должен содержать столбцы" in out.out 
 
 def test_students_performance_report_score(capsys, tmp_path) -> None:
     """Проверяется корректность введенных оценок в csv"""
