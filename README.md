@@ -10,7 +10,7 @@
 ```bash
 REPORTS: dict[str, Callable[[list[str]], None]] = {
     "students-performance": lambda files: performance_report(files, "student_name"),
-    "students-performance": lambda files: performance_report(files, "teacher_name"), #пример
+    "teachers-performance": lambda files: performance_report(files, "teacher_name"), #пример
 }
 ```
 - Если логика нового отчета будет кардинально отличаться, создаем функцию для его формирования и добавляем строку в REPORTS
