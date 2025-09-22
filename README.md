@@ -6,7 +6,7 @@
 - Покрытие тестами(```PYTHONPATH=. pytest --cov(в таком формате запуск из корня)```):
 <img width="1005" height="340" alt="image" src="https://github.com/user-attachments/assets/df7c1148-52fa-4ddd-9c72-9bba9584289f" />
 
-- Масштабирование: чтобы добавить отчет с сортировкой по другому полю, необходимо в словарь REPORTS в файле main.py добавить новую строку с указанием нужного поля
+- Масштабирование: чтобы добавить отчет с сортировкой по другому полю, необходимо в словарь REPORTS в файле main.py добавить новую строку с указанием нужного поля, после чего запускать программу с новым названием отчета
 ```bash
 REPORTS: dict[str, Callable[[list[str]], None]] = {
     "students-performance": lambda files: performance_report(files, "student_name"),
