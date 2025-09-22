@@ -1,28 +1,27 @@
 import csv
-import sys
 from tabulate import tabulate
-from typing import Sequence
 
 
-def students_performance_report(files: Sequence[str]) -> None:
+def performance_report(files: list[str], field: str) -> None:
+    """Генерирует отчет средних оценок"""
     grades: dict[str, list[float]] = {}
 
     for file in files:
         try:    
             with open(file, newline="", encoding="utf-8") as f:
-                reader = csv.DictReader(f)
-                if 'student_name' not in reader.fieldnames or 'grade' not in reader.fieldnames:
-                    raise ValueError(f"Файл {f} должен содержать столбцы 'student_name' и 'grade'.")
+                reader: csv.DictReader = csv.DictReader(f)
+                if field not in reader.fieldnames or 'grade' not in reader.fieldnames:
+                    raise ValueError(f"Файл {f} должен содержать столбцы {field} и 'grade'.")
                 for row in reader:
-                    student: str = row["student_name"]
+                    x: str = row[field]
                     try:
-                        grade = float(row["grade"])
+                        grade:float = float(row["grade"])
                     except ValueError:
-                        print(f"Некорректная оценка для студента {student}")
+                        print(f"Некорректная оценка для студента {x}")
                         continue
-                    if student not in grades:
-                        grades[student] = []
-                    grades[student].append(grade)
+                    if x not in grades:
+                        grades[x] = []
+                    grades[x].append(grade)
 
         except FileNotFoundError:
             print(f'Файл {file} не найден')
@@ -30,12 +29,12 @@ def students_performance_report(files: Sequence[str]) -> None:
             print(f'Ошибка чтения файла - {error}')
     
     data: list[tuple[str, float]] = [
-        (student, round(sum(scores) / len(scores), 1)) for student, scores in grades.items()
+        (obj, round(sum(scores) / len(scores), 1)) for obj, scores in grades.items()
     ]
 
     data.sort(key=lambda x: x[1], reverse=True)
     
     if data:
-        print(tabulate(data, headers=["student_name", "grade"], showindex=1))
+        print(tabulate(data, headers=[field, "grade"], showindex=1, floatfmt=".1f"))
     else:
         print("Нет данных для отображения")
